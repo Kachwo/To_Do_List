@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>ToDo List</title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <section class="view">
+                <h1 class="title">My ToDo List</h1>
+                <form @keydown.enter.prevent="">
+                    <input v-model="new_task" v-bind:class="{ active: new_task }" type="text" placeholder="Add your task here..." v-on:keyup.enter="addItem">
+                    <div class="btn add_btn" v-bind:class="{ active: new_task }"  @click="addItem">+</div>
+                </form>
+        
+                <div v-if="incompleted.length > 0">
+                    <p>Task Incompleted:</p>
+                    <transition-group name="todo-item" class="todo-list">
+                        <li v-for="(item, index) in incompleted" v-bind:key="item.title" class="incompleted_task">
+                            <input class="task_checkbox" type="checkbox" v-bind:id="'item_' + item.id" v-model="item.done">
+                            <span>{{ item.title }}</span>
+                            <span class="delete" @click="deleteItem(item)"></span>
+                        </li>
+                    </transition>  
+                </div> 
+        
+        
+                <div v-if="completed.length > 0 && show">
+                    <p>Task Completed:</p>
+                    <transition-group name="todo-item" class="todo-list">
+                        <li v-for="(item, index) in completed" v-bind:key="item.title" class="completed_task">
+                            <input class="task_checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
+                            <span >{{ item.title }}</span>
+                            <span class="delete" @click="deleteItem(item)"></span>
+                        </li>
+                    </transition>  
+                </div>  
+                <div class="control-buttons">
+                    <div class="btn bottom_btn" v-if="completed.length > 0" @click="toggleShowComplete"><span v-if="!show">Show Completed Tasks</span><span v-else>Hide Completed Tasks</span></div>
+                    <div class="btn bottom_btn" v-if="list.length > 0" @click="clearAll">Clear All</div>
+                </div>
+            </section>
+        </div>
+        
+        <script src="script.js" type="text/javascript"></script>
+    </body>
+</html>
