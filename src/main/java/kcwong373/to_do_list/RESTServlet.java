@@ -35,8 +35,8 @@ public class RESTServlet extends HttpServlet {
      Statement st = null;
       ResultSet rs = null;
       String url = "jdbc:derby://localhost:1527/todolist";
-      String user = "ee4216";
-      String password = "ee4216";
+      String user = "test";
+      String password = "test";
      String resultString="[";
         
  @Override
